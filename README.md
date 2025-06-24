@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -68,3 +69,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+=======
+# CRM-Hotel-Booking-Management-System
+CRM-Hotel Booking Management System is a full-stack app using React.js, Node.js, Express.js, and MongoDB. It lets users book rooms and make payments via Razorpay, while admins manage rooms, bookings, and users through a secure dashboard.
+>>>>>>> c626beb680500dee10a04e3e328355ca97847dd7
