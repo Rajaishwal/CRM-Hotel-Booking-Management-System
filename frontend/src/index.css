@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: "Montserrat", sans-serif;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.navbar {
+  background-color: black !important;
+}
+
+.navbar-brand {
+  margin-left: 20px !important;
+  color: white !important;
+}
+
+.nav-link {
+  color: white !important;
+}
+
+.navbar-nav {
+  margin-right: 20px !important;
+  margin-left: auto !important;
+}
+
+.smallimg {
+  height: 200px !important;
+  width: 100% !important;
+  border-radius: 5px !important;
+}
+
+h1 {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+}
+
+.btn {
+  background-color: black !important;
+  color: white !important;
+  box-shadow: none !important;
+}
+
+.bs {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px !important;
+  margin-top: 20px !important;
+  border-radius: 5px !important;
+  padding: 20px !important;
+}
+
+p {
+  font-weight: 600 !important;
+}
+
+.bigimg {
+  height: 400px !important;
+  border-radius: 5px !important;
+}
+
+input, select, .ant-picker {
+  box-shadow: none !important;
+  margin-top: 10px !important;
+  border: 2px solid #000 !important;
+  width: 100% !important;
+  border-radius: 3px !important;
+  height: 35px !important;
+}
+
+h1 {
+  font-size: 24px !important;
+  padding: 10px !important;
+  text-align: center !important;
+}
+
+.dropdown-toggle {
+  border: 0px solid black
+}
+
+.ant-picker-input input {
+  border: none !important;
+}
+
+.profile-bookings {
+  margin-left: 1rem;
+  margin-top: 1rem;
+}
+
+.cancel-btn {
+  background-color: red !important;
+  color: white !important;
+  font-size: 17px !important;
+  padding: 4px 12px !important;
+  line-height: 1.2 !important;
+  font-weight: 500;
+}
+
+.admin-panel {
+  margin: 2rem 2rem 0 2rem !important;
+}
+
+.admin-panel h2 {
+  font-weight: 700 !important;
+}
+
+.landing {
+  background-color: #000 !important;
+  height: 100vh !important;
+}
+
+.btn-landing {
+  background-color: white !important;
+  color: #000 !important;
+  font-weight: 500 !important;
+  margin-top: 20px !important;
+}
+
+.landing .col-md-12 {
+  border-right: 5px solid white !important;
+}
