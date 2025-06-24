@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 const mongoURL = 'mongodb+srv://mern-roomstay:roomstay321@cluster0.t8xxte6.mongodb.net/mern-roomstay?retryWrites=true&w=majority&appName=Cluster0';
 
