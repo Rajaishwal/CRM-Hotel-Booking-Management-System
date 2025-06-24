@@ -95,7 +95,7 @@ export function MyBookings() {
     try {
       setLoading(true);
       const result = (
-        await axios.post("http://localhost:5000/api/bookings/cancelbooking", {
+        await axios.post("https://crm-hotel-booking-management-system-2.onrender.com/api/bookings/cancelbooking", {
           bookingid,
           roomid,
         })

@@ -75,7 +75,7 @@ function Bookingscreen() {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/bookings/bookroom",
+        "https://crm-hotel-booking-management-system-2.onrender.com/api/bookings/bookroom",
         bookingDetails
       );
       return true;
