@@ -34,7 +34,7 @@ function Bookingscreen() {
       }
       try {
         setLoading(true);
-        const response = await axios.post("http://localhost:5000/api/rooms/getallroombyid", { roomid });
+        const response = await axios.post("https://crm-mern-hotel-booking-management-system-izx4.onrender.com/api/rooms/getallroombyid", { roomid });
         setRoom(response.data);
       } catch {
         setError(true);
@@ -55,7 +55,7 @@ function Bookingscreen() {
       totaldays,
     };
     try {
-      await axios.post("http://localhost:5000/api/bookings/bookroom", bookingDetails);
+      await axios.post("https://crm-mern-hotel-booking-management-system-izx4.onrender.com/api/bookings/bookroom", bookingDetails);
       return true;
     } catch {
       throw new Error("Booking error");
@@ -65,7 +65,7 @@ function Bookingscreen() {
   const handlePayment = async () => {
     setLoading(true);
     try {
-      const result = await axios.post("http://localhost:5000/api/payments/razorpay", {
+      const result = await axios.post("https://crm-mern-hotel-booking-management-system-izx4.onrender.com/api/payments/razorpay", {
         amount: totalamount,
         currency: "INR",
       });
