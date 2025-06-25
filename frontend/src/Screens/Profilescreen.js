@@ -67,7 +67,7 @@ export function MyBookings() {
     try {
       setLoading(true);
       const res = await axios.post(
-        "http://localhost:5000/api/bookings/getbookingsbyuserid",
+        "https://crm-mern-hotel-booking-management-system-izx4.onrender.com/api/bookings/getbookingsbyuserid",
         { userid: user._id }
       );
       setbookings(res.data);
@@ -86,7 +86,7 @@ export function MyBookings() {
   const cancelBooking = async (bookingid, roomid) => {
     try {
       setLoading(true);
-      await axios.post("http://localhost:5000/api/bookings/cancelbooking", { bookingid, roomid });
+      await axios.post("https://crm-mern-hotel-booking-management-system-izx4.onrender.com/api/bookings/cancelbooking", { bookingid, roomid });
       setTimeout(async () => {
         await Swal.fire({
           icon: "success",
