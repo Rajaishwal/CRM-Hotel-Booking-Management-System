@@ -25,7 +25,7 @@ function Registerscreen() {
 
       try {
         setloading(true);
-        const result = await axios.post("https://crm-hotel-booking-management-system-2.onrender.com/api/users/register", user).data;
+        const result = await axios.post("https://crm-hotel-booking-management-system-1.onrender.com/api/users/register", user).data;
         setloading(false);
         setsuccess(true)
 

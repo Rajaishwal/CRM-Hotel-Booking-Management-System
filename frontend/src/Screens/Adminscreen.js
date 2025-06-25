@@ -249,7 +249,7 @@ export function Addroom() {
     try {
       setloading(true);
       const result = (
-        await axios.post("https://crm-hotel-booking-management-system-2.onrender.com/api/rooms/addroom", newroom)
+        await axios.post("https://crm-hotel-booking-management-system-1.onrender.com/api/rooms/addroom", newroom)
       ).data;
       console.log(result);
       setloading(false);

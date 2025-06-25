@@ -1,40 +1,46 @@
 const express = require('express');
 const router = express.Router();
-
 const Room = require('../models/room');
 
-// GET all rooms
+// GET /api/rooms/ — fetch all rooms
+router.get('/', async (req, res) => {
+  try {
+    const rooms = await Room.find({});
+    res.json(rooms);
+  } catch (error) {
+    res.status(400).json({ message: 'Error fetching rooms', error });
+  }
+});
+
+// GET /api/rooms/getallrooms — same as root
 router.get('/getallrooms', async (req, res) => {
   try {
     const rooms = await Room.find({});
-    res.send(rooms);
+    res.json(rooms);
   } catch (error) {
-    return res.status(400).json({ message: 'Error fetching rooms', error });
+    res.status(400).json({ message: 'Error fetching rooms', error });
   }
 });
 
-// POST room by ID
+// POST /api/rooms/getallroombyid — fetch room by ID
 router.post('/getallroombyid', async (req, res) => {
-  const roomid = req.body.roomid;
-
   try {
-    const room = await Room.findOne({ _id: roomid }); 
-    res.send(room);
+    const room = await Room.findById(req.body.roomid);
+    res.json(room);
   } catch (error) {
-    return res.status(400).json({ message: 'Error fetching room by ID', error });
+    res.status(400).json({ message: 'Error fetching room', error });
   }
 });
 
+// POST /api/rooms/addroom — add a new room
 router.post('/addroom', async (req, res) => {
-
   try {
-    const newroom = new Room(req.body)
-    await newroom.save();
+    const newRoom = new Room(req.body);
+    await newRoom.save();
     res.send('New Room Added Successfully');
-
   } catch (error) {
-    return res.status(400).json({ message: 'Error adding room', error });
+    res.status(400).json({ message: 'Error adding room', error });
   }
-})
+});
 
 module.exports = router;

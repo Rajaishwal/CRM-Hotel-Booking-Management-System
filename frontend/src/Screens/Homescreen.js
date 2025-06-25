@@ -26,7 +26,7 @@ const Homescreen = () => {
       try {
         setloading(true);
         const response = await axios.get(
-          "https://crm-hotel-booking-management-system-2.onrender.com/api/rooms/getallrooms"
+          "https://crm-hotel-booking-management-system-1.onrender.com/api/rooms/getallrooms"
         );
         setrooms(response.data);
         setdublicaterooms(response.data);
