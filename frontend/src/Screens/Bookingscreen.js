@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Loader from "../Components/Loader";
@@ -15,55 +15,37 @@ function Bookingscreen() {
 
   const fromDateMoment = moment(fromdate, "DD-MM-YYYY");
   const toDateMoment = moment(todate, "DD-MM-YYYY");
-
-  const totaldays =
-    moment.duration(toDateMoment.diff(fromDateMoment)).asDays() + 1;
+  const totaldays = moment.duration(toDateMoment.diff(fromDateMoment)).asDays() + 1;
   const totalamount = room ? totaldays * room.rentperday : 0;
 
   useEffect(() => {
     const fetchRoom = async () => {
-      const user = JSON.parse(localStorage.getItem("currentUser"));
-      if (!user) {
+      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+      if (!currentUser) {
         setLoading(false);
-
-        Swal.fire({
+        await Swal.fire({
           icon: "info",
           title: "Login Required",
           text: "Please login to book a room",
           confirmButtonText: "Go to Login",
-          allowOutsideClick: false,
-          allowEscapeKey: false,
-        }).then((result) => {
-          if(result.isConfirmed) {
-
-          // document.body.innerHTML = '';
-          window.location.href = "/login";
-          }
         });
-
-        return null;
+        window.location.href = "/login";
+        return;
       }
-
       try {
         setLoading(true);
-        const response = await axios.post(
-          "http://localhost:5000/api/rooms/getallroombyid",
-          { roomid }
-        );
+        const response = await axios.post("http://localhost:5000/api/rooms/getallroombyid", { roomid });
         setRoom(response.data);
-        setLoading(false);
-      } catch (err) {
-        console.error("Error fetching room:", err);
+      } catch {
         setError(true);
+      } finally {
         setLoading(false);
       }
     };
-
     fetchRoom();
   }, [roomid]);
 
-  // Booking API call only
-  async function bookRoom() {
+  const bookRoom = async () => {
     const bookingDetails = {
       room,
       userid: user._id,
@@ -72,97 +54,73 @@ function Bookingscreen() {
       totalamount,
       totaldays,
     };
-
     try {
-      await axios.post(
-        "https://crm-hotel-booking-management-system-1.onrender.com/api/bookings/bookroom",
-        bookingDetails
-      );
+      await axios.post("http://localhost:5000/api/bookings/bookroom", bookingDetails);
       return true;
-    } catch (error) {
-      console.error("Booking error:", error);
-      throw error;
+    } catch {
+      throw new Error("Booking error");
     }
-  }
+  };
 
-  // Razorpay handler
-  async function handlePayment() {
+  const handlePayment = async () => {
+    setLoading(true);
     try {
-      const result = await axios.post(
-        "http://localhost:5000/api/payments/razorpay",
-        {
-          amount: totalamount,
-          currency: "INR",
-        }
-      );
+      const result = await axios.post("http://localhost:5000/api/payments/razorpay", {
+        amount: totalamount,
+        currency: "INR",
+      });
 
       const options = {
-        key: "rzp_test_Z52xmOfB4khv86", // Replace with your key_id
+        key: "rzp_test_Z52xmOfB4khv86",
         amount: result.data.amount,
         currency: result.data.currency,
         name: "Stay Room",
         description: `Booking room ${room.name}`,
         order_id: result.data.id,
-        handler: async function (response) {
+        handler: async () => {
           try {
-            setLoading(true); // Show loader
-            await bookRoom(); // Save booking
-            setTimeout(async () => {
-              setLoading(false); // Hide loader
-
-              const result = await Swal.fire({
-                icon: "success",
-                title: "Congratulations!",
-                text: "Room Booked Successfully!",
-                confirmButtonText: "OK",
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-              });
-
-              if (result.isConfirmed) {
-                window.location.reload();
-              }
-            }, 1500);
-          } catch (error) {
-            setLoading(false);
+            await bookRoom();
+            await Swal.fire({
+              icon: "success",
+              title: "Room Booked Successfully!",
+              confirmButtonText: "OK",
+            });
+            window.location.reload();
+          } catch {
             Swal.fire({
               icon: "error",
               title: "Oops...",
               text: "Something went wrong!",
-              confirmButtonText: "OK",
             });
           }
         },
-        prefill: {
-          name: user.name,
-          email: user.email,
-        },
-        theme: {
-          color: "#3399cc",
-        },
+        prefill: { name: user.name, email: user.email },
+        theme: { color: "#3399cc" },
       };
 
       const rzp = new window.Razorpay(options);
       rzp.open();
-    } catch (error) {
-      console.error("Payment Initialization Error:", error);
-      alert("Failed to initialize Razorpay.");
+    } catch {
+      Swal.fire({
+        icon: "error",
+        title: "Payment Initialization Failed",
+      });
+    } finally {
+      setLoading(false);
     }
-  }
+  };
+
+  if (loading) return <Loader />;
+  if (error) return <Error />;
 
   return (
     <div className="m-5">
-      {loading ? (
-        <h1>
-          <Loader />
-        </h1>
-      ) : room ? (
+      {room ? (
         <div className="row justify-content-center mt-5 bs">
           <div className="col-md-6">
             <h1>{room.name}</h1>
             <img src={room.imageurls[0]} className="bigimg" alt="room" />
           </div>
-
           <div className="col-md-6" style={{ textAlign: "right" }}>
             <h1 className="text-end">Booking Details</h1>
             <hr />
@@ -170,16 +128,14 @@ function Bookingscreen() {
             <p>From Date: {fromdate}</p>
             <p>To Date: {todate}</p>
             <p>Max Count: {room.maxcount}</p>
-
             <h1 className="text-end">Amount</h1>
             <hr />
             <p>Total Days: {totaldays}</p>
             <p>Rent per Day: ₹{room.rentperday}</p>
             <p>Total Amount: ₹{totalamount}</p>
-
             <div style={{ float: "right" }}>
-              <button className="btn btn-primary" onClick={handlePayment}>
-                Pay Now
+              <button className="btn btn-primary" onClick={handlePayment} disabled={loading}>
+                {loading ? "Processing..." : "Pay Now"}
               </button>
             </div>
           </div>

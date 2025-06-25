@@ -5,7 +5,7 @@ import Loader from "../Components/Loader";
 import "antd/dist/reset.css";
 import Error from "../Components/Error";
 import moment from "moment";
-import { DatePicker, Space } from "antd";
+import { DatePicker } from "antd";
 
 const { RangePicker } = DatePicker;
 
@@ -26,14 +26,14 @@ const Homescreen = () => {
       try {
         setloading(true);
         const response = await axios.get(
-          "https://crm-hotel-booking-management-system-1.onrender.com/api/rooms/getallrooms"
+          "http://localhost:5000/api/rooms/getallrooms"
         );
         setrooms(response.data);
         setdublicaterooms(response.data);
-        setloading(false);
       } catch (err) {
         console.error("Error fetching rooms: ", err);
         seterror(true);
+      } finally {
         setloading(false);
       }
     };
@@ -48,9 +48,7 @@ const Homescreen = () => {
       setfromdate(from);
       settodate(to);
 
-      var temprooms = [];
-
-      for (const room of dublicaterooms) {
+      const temprooms = dublicaterooms.filter((room) => {
         let availability = true;
 
         if (room.currentbookings.length > 0) {
@@ -84,32 +82,36 @@ const Homescreen = () => {
           }
         }
 
-        if (availability) {
-          temprooms.push(room);
-        }
-      }
+        return availability;
+      });
 
       setrooms(temprooms);
     }
   }
 
-  function filterBySearch(){
-    
-    const temprooms = dublicaterooms.filter(room => room.name.toLowerCase().includes(searchkey.toLowerCase()))
+  function filterBySearch() {
+    const temprooms = dublicaterooms.filter((room) =>
+      room.name.toLowerCase().includes(searchkey.toLowerCase())
+    );
     setrooms(temprooms);
   }
 
-  function filterByType(e){
-
+  function filterByType(e) {
     settype(e);
-    
-    if(e !== "all") {
-      const formattedType = e.replace(/-/g, ' ').toLowerCase();
-      const temprooms = dublicaterooms.filter(room => room.type.toLowerCase() === formattedType)
+
+    if (e !== "all") {
+      const formattedType = e.replace(/-/g, " ").toLowerCase();
+      const temprooms = dublicaterooms.filter(
+        (room) => room.type.toLowerCase() === formattedType
+      );
       setrooms(temprooms);
     } else {
       setrooms(dublicaterooms);
     }
+  }
+
+  if (error) {
+    return <Error message="Failed to load rooms." />;
   }
 
   return (
@@ -124,12 +126,22 @@ const Homescreen = () => {
             type="text"
             className="form-control"
             placeholder="Search rooms"
-            value={searchkey} onChange={(e) => {setsearchkey(e.target.value)}} onKeyUp={filterBySearch}
+            value={searchkey}
+            onChange={(e) => {
+              setsearchkey(e.target.value);
+            }}
+            onKeyUp={filterBySearch}
           />
         </div>
 
         <div className="col-md-3">
-          <select className="form-control" value={type} onChange={(e) => {filterByType(e.target.value)}}>
+          <select
+            className="form-control"
+            value={type}
+            onChange={(e) => {
+              filterByType(e.target.value);
+            }}
+          >
             <option value="all">All</option>
             <option value="delux">Delux</option>
             <option value="non-delux">Non Delux</option>
