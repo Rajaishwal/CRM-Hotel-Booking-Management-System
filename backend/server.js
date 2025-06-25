@@ -34,7 +34,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // handle preflight
+app.options('/*corsPreflight', cors(corsOptions)); 
 
 // Optional echo route
 app.post('/api/rooms/addroom', (req, res) => {
@@ -51,8 +51,7 @@ app.get('/', (req, res) => {
   res.send('Backend server is running');
 });
 
-// Catch-all 404 route
-app.use((req, res) => {
+app.use('/*catchAll', (req, res) => {
   res.status(404).json({ error: `Cannot ${req.method} ${req.originalUrl}` });
 });
 
