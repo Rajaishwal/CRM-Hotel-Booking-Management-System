@@ -15,7 +15,7 @@ function Loginscreen() {
     try {
       setloading(true);
       const response = await axios.post(
-        "http://localhost:5000/api/users/login",  // ✅ fixed URL
+        "https://crm-mern-hotel-booking-management-system-izx4.onrender.com/api/users/login",  // ✅ fixed URL
         user
       );
       const result = response.data;
