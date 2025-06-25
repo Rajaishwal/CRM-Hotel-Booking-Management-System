@@ -47,7 +47,7 @@ export function Bookings() {
     const fetchBookings = async () => {
       try {
         const data = (
-          await axios.get("http://localhost:5000/api/bookings/getallbookings")
+          await axios.get("https://crm-mern-hotel-booking-management-system-izx4.onrender.com/api/bookings/getallbookings")
         ).data;
         setbookings(data);
       } catch (error) {
@@ -106,7 +106,7 @@ export function Rooms() {
     const fetchRooms = async () => {
       try {
         const data = (
-          await axios.get("http://localhost:5000/api/rooms/getallrooms")
+          await axios.get("https://crm-mern-hotel-booking-management-system-izx4.onrender.com/api/rooms/getallrooms")
         ).data;
         setrooms(data);
       } catch (error) {
@@ -165,7 +165,7 @@ export function Users() {
     const fetchUsers = async () => {
       try {
         const data = (
-          await axios.get("http://localhost:5000/api/users/getallusers")
+          await axios.get("https://crm-mern-hotel-booking-management-system-izx4.onrender.com/api/users/getallusers")
         ).data;
         setusers(data);
       } catch (error) {
@@ -238,7 +238,7 @@ export function Addroom() {
     try {
       setloading(true);
       const result = (
-        await axios.post("http://localhost:5000/api/rooms/addroom", newroom)
+        await axios.post("https://crm-mern-hotel-booking-management-system-izx4.onrender.com/api/rooms/addroom", newroom)
       ).data;
       console.log(result);
       Swal.fire({
