@@ -27,7 +27,7 @@ function Registerscreen() {
       seterror(false);
       setsuccess(false);
 
-      await axios.post("http://localhost:5000/api/users/register", user);
+      await axios.post("https://crm-mern-hotel-booking-management-system-izx4.onrender.com/api/users/register", user);
 
       setloading(false);
       setsuccess(true);
