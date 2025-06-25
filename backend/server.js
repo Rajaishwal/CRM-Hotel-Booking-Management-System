@@ -14,7 +14,7 @@ const port = process.env.PORT || 5000;
 app.use(express.json());
 app.use(cors());
 
-// Optional echo route
+
 app.post('/api/rooms/addroom', (req, res) => {
   console.log('Echo payload:', req.body);
   res.json({ echo: req.body });
@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
   res.send('Backend server is running');
 });
 
-// 👇 Catch-all middleware for unmatched routes
+
 app.use((req, res) => {
   res.status(404).json({ error: `Cannot ${req.method} ${req.originalUrl}` });
 });
