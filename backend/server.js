@@ -34,9 +34,9 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.options('/*corsPreflight', cors(corsOptions)); 
 
-// Optional echo route
+app.options('*', cors(corsOptions));
+
 app.post('/api/rooms/addroom', (req, res) => {
   console.log('Echo payload:', req.body);
   res.json({ echo: req.body });
@@ -51,7 +51,7 @@ app.get('/', (req, res) => {
   res.send('Backend server is running');
 });
 
-app.use('/*catchAll', (req, res) => {
+app.use('*', (req, res) => {
   res.status(404).json({ error: `Cannot ${req.method} ${req.originalUrl}` });
 });
 
